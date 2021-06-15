@@ -26,15 +26,18 @@ a:visited {
     font-size: 2em;
 }
 
-.status-trusted {
+#status-trusted {
     color: #37beb0;
+    display: block;
 }
 
-.status-warning {
+#status-warning {
     color: #e7625f;
+    display: none;
 }
 
-.content {
+#content {
     font-size: 1em;
     line-height: normal;
+    display: none;
 }

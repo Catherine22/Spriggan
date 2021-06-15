@@ -1,24 +1,62 @@
-// Initialize butotn with users's prefered color
-let changeColor = document.getElementById('changeColor');
+const HIBP = {
+    URL: 'https://haveibeenpwned.com/api/v3/',
+    BREACHES: 'breaches/',
+};
 
-chrome.storage.sync.get('color', ({ color }) => {
-    changeColor.style.backgroundColor = color;
-});
+function showContent(active = true) {
+    let content = document.getElementById('content');
+    if (active) {
+        content.style.display = 'block';
+    } else {
+        content.style.display = 'none';
+    }
+}
 
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener('click', async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+function updateStatus(dataBreachList) {
+    if (dataBreachList.length > 0) {
+        showContent();
+        let desc = dataBreachList[0].Description;
+        let breachDate = dataBreachList[0].BreachDate;
+        document.getElementById('breach_date').innerHTML = breachDate;
+        document.getElementById('breach_desc').innerHTML = desc;
+        document.getElementById('status-trusted').style.display = 'none';
+        document.getElementById('status-warning').style.display = 'block';
+    } else {
+        showContent(false);
+        document.getElementById('status-trusted').style.display = 'block';
+        document.getElementById('status-warning').style.display = 'none';
+    }
+}
 
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: setPageBackgroundColor,
-    });
-});
+// GET data breaches by the URL of the current tab
+function getDataBreachesByDomain() {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+        let current_url = tabs[0].url;
+        // use `url` here inside the callback because it's asynchronous!
+        if (current_url.substring(0, 4) === 'http') {
+            current_url = current_url.replace('://www.', '://');
+            let domain = current_url.split('://').pop().split('/')[0];
 
-// The body of this function will be execuetd as a content script inside the
-// current page
-function setPageBackgroundColor() {
-    chrome.storage.sync.get('color', ({ color }) => {
-        document.body.style.backgroundColor = color;
+            const query = new URLSearchParams({ domain: domain }).toString();
+            const url = `${HIBP.URL}${HIBP.BREACHES}?${query}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((dataBreachList) => {
+                            updateStatus(dataBreachList);
+                        });
+                    }
+                })
+                .catch((error) => {
+                    alert('Error:', error);
+                });
+        }
     });
 }
+
+getDataBreachesByDomain();
