@@ -1,0 +1,40 @@
+body {
+    font-family: 'Open Sans';
+    color: #222222;
+    padding: 0.5em;
+    width: 240px;
+    border-radius: 16px;
+}
+
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+code {
+    display: block;
+    font-family: 'Open Sans';
+    font-size: 1em;
+}
+
+a:link,
+a:visited {
+    color: #e7625f;
+}
+
+.status {
+    font-size: 2em;
+}
+
+.status-trusted {
+    color: #37beb0;
+}
+
+.status-warning {
+    color: #e7625f;
+}
+
+.content {
+    font-size: 1em;
+    line-height: normal;
+}
