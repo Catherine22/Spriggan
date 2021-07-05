@@ -26,9 +26,14 @@ a:visited {
     font-size: 2em;
 }
 
+#status-scanning {
+    color: #222222;
+    display: block;
+}
+
 #status-trusted {
     color: #37beb0;
-    display: block;
+    display: none;
 }
 
 #status-warning {

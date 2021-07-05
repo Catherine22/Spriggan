@@ -21,10 +21,12 @@ function updateStatus(dataBreachList) {
         document.getElementById('breach_desc').innerHTML = desc;
         document.getElementById('status-trusted').style.display = 'none';
         document.getElementById('status-warning').style.display = 'block';
+        document.getElementById('status-scanning').style.display = 'none';
     } else {
         showContent(false);
         document.getElementById('status-trusted').style.display = 'block';
         document.getElementById('status-warning').style.display = 'none';
+        document.getElementById('status-scanning').style.display = 'none';
     }
 }
 
@@ -32,7 +34,6 @@ function updateStatus(dataBreachList) {
 function getDataBreachesByDomain() {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         let current_url = tabs[0].url;
-        // use `url` here inside the callback because it's asynchronous!
         if (current_url.substring(0, 4) === 'http') {
             current_url = current_url.replace('://www.', '://');
             let domain = current_url.split('://').pop().split('/')[0];
@@ -55,6 +56,8 @@ function getDataBreachesByDomain() {
                 .catch((error) => {
                     alert('Error:', error);
                 });
+        } else {
+            updateStatus([]);
         }
     });
 }
