@@ -1,0 +1,23 @@
+{
+    "name": "Spriggan",
+    "description": "Find out risky websites at a glance. Protect users against data breaches.",
+    "version": "0.5",
+    "manifest_version": 3,
+    "permissions": ["storage", "activeTab", "scripting", "tabs"],
+    "host_permissions": ["http://localhost:9200/"],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "images/shield16.png",
+            "32": "images/shield32.png",
+            "48": "images/shield48.png",
+            "128": "images/shield128.png"
+        }
+    },
+    "icons": {
+        "16": "images/shield16.png",
+        "32": "images/shield32.png",
+        "48": "images/shield48.png",
+        "128": "images/shield128.png"
+    }
+}
