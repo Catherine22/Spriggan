@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Open+Sans"
+            type="text/css"
+        />
+        <link rel="stylesheet" href="button.css" />
+        <link rel="stylesheet" href="popup.css" />
+        <title>Spriggan</title>
+    </head>
+    <body>
+        <script src="popup.js"></script>
+        <div class="header">
+            <h1 class="status">
+                <a id="status-scanning">Scanning...</a>
+                <a id="status-trusted">Trusted</a>
+                <a id="status-warning">Warning</a>
+            </h1>
+        </div>
+        <div id="content">
+            <div>Breach date: <a id="breach_date"></a></div>
+            <pre>
+                <code id="breach_desc"></code>
+            </pre>
+        </div>
+    </body>
+</html>

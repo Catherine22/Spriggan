@@ -1,0 +1,48 @@
+body {
+    font-family: 'Open Sans';
+    color: #222222;
+    padding: 0.5em;
+    width: 240px;
+    border-radius: 16px;
+}
+
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+code {
+    display: block;
+    font-family: 'Open Sans';
+    font-size: 1em;
+}
+
+a:link,
+a:visited {
+    color: #e7625f;
+}
+
+.status {
+    font-size: 2em;
+}
+
+#status-scanning {
+    color: #222222;
+    display: block;
+}
+
+#status-trusted {
+    color: #37beb0;
+    display: none;
+}
+
+#status-warning {
+    color: #e7625f;
+    display: none;
+}
+
+#content {
+    font-size: 1em;
+    line-height: normal;
+    display: none;
+}
