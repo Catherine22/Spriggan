@@ -1,6 +1,6 @@
-const HIBP = {
-    URL: 'https://haveibeenpwned.com/api/v3/',
-    BREACHES: 'breaches/',
+const ES = {
+    URL: 'http://localhost:9200/',
+    CMD_SEARCH: '_search',
 };
 
 function showContent(active = true) {
@@ -30,32 +30,44 @@ function updateStatus(dataBreachList) {
     }
 }
 
+function getQueryParams(keyword) {
+    return JSON.stringify({
+        query: {
+            match: {
+                domain: {
+                    query: keyword,
+                },
+            },
+        },
+    });
+}
+
 // GET data breaches by the URL of the current tab
 function getDataBreachesByDomain() {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         let current_url = tabs[0].url;
         if (current_url.substring(0, 4) === 'http') {
-            current_url = current_url.replace('://www.', '://');
             let domain = current_url.split('://').pop().split('/')[0];
 
-            const query = new URLSearchParams({ domain: domain }).toString();
-            const url = `${HIBP.URL}${HIBP.BREACHES}?${query}`;
-            fetch(url, {
+            const url = `${ES.URL}${ES.CMD_SEARCH}`;
+            const requestOptions = {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            })
+                body: getQueryParams(domain),
+                redirect: 'follow',
+            };
+            fetch(url, requestOptions)
                 .then((response) => {
                     if (response.ok) {
-                        response.json().then((dataBreachList) => {
-                            updateStatus(dataBreachList);
+                        response.text().then((result) => {
+                            alert(result);
+                            // updateStatus(dataBreachList);
                         });
                     }
                 })
-                .catch((error) => {
-                    alert('Error:', error);
-                });
+                .catch((error) => alert(error.toString()));
         } else {
             updateStatus([]);
         }

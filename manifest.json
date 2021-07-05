@@ -7,7 +7,7 @@
         "service_worker": "background.js"
     },
     "permissions": ["storage", "activeTab", "scripting", "tabs"],
-    "host_permissions": ["https://haveibeenpwned.com/"],
+    "host_permissions": ["http://localhost:9200/"],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
