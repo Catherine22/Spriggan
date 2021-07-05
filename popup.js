@@ -14,7 +14,7 @@ function showContent(active = true) {
 
 function updateStatus(dataBreachList) {
     if (dataBreachList.length > 0) {
-        showContent();
+        showContent(true);
         let dataset = dataBreachList[0]._source;
         let desc = dataset.description;
         let breachDate = dataset.breach_date;
@@ -43,7 +43,7 @@ function getQueryParams(keyword) {
     });
 }
 
-// GET data breaches by the URL of the current tab
+// Query data breaches by the URL of the current tab
 function getDataBreachesByDomain() {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         let current_url = tabs[0].url;
