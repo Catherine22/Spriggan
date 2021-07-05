@@ -15,8 +15,9 @@ function showContent(active = true) {
 function updateStatus(dataBreachList) {
     if (dataBreachList.length > 0) {
         showContent();
-        let desc = dataBreachList[0].Description;
-        let breachDate = dataBreachList[0].BreachDate;
+        let dataset = dataBreachList[0]._source;
+        let desc = dataset.description;
+        let breachDate = dataset.breach_date;
         document.getElementById('breach_date').innerHTML = breachDate;
         document.getElementById('breach_desc').innerHTML = desc;
         document.getElementById('status-trusted').style.display = 'none';
@@ -51,7 +52,7 @@ function getDataBreachesByDomain() {
 
             const url = `${ES.URL}${ES.CMD_SEARCH}`;
             const requestOptions = {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -61,13 +62,12 @@ function getDataBreachesByDomain() {
             fetch(url, requestOptions)
                 .then((response) => {
                     if (response.ok) {
-                        response.text().then((result) => {
-                            alert(result);
-                            // updateStatus(dataBreachList);
+                        response.json().then((result) => {
+                            updateStatus(result.hits.hits);
                         });
                     }
                 })
-                .catch((error) => alert(error.toString()));
+                .catch((error) => alert('Error', error.toString()));
         } else {
             updateStatus([]);
         }
