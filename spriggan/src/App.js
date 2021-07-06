@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-
-const ES = {
-    URL: 'http://localhost:9200/',
-    CMD_SEARCH: '_search'
-};
-
-const STATUS = ['Trusted', 'Warning', 'Error'];
-const STATUS_COLORS = ['#37beb0', '#e7625f', '#e7625f'];
+import { ES, STATUS } from './constants';
+import './app.css';
 
 function App() {
     const [desc, setDesc] = useState('');
@@ -55,8 +48,7 @@ function App() {
                             }
                         })
                         .catch(error => {
-                            alert('Error', error.toString());
-                            setDesc('');
+                            setDesc(error);
                             setBreachDate('');
                             setSeverity(0);
                         });
@@ -70,7 +62,7 @@ function App() {
 
     let styles = {
         title: {
-            color: STATUS_COLORS[severity]
+            color: STATUS[severity].color
         }
     };
 
@@ -78,13 +70,15 @@ function App() {
         <div className="App">
             <header className="header">
                 <h1 className="title" style={styles.title}>
-                    {STATUS[severity]}
+                    {STATUS[severity].title}
                 </h1>
             </header>
             <body className="content">
-                <div className="item">
-                    Breach date: <a className="breachDate">{breachDate}</a>
-                </div>
+                {breachDate.length > 0 ? (
+                    <div className="item">
+                        Breach date: <a className="breachDate">{breachDate}</a>
+                    </div>
+                ) : null}
                 <div className="breachDesc">{desc}</div>
             </body>
         </div>
