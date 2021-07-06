@@ -5,15 +5,15 @@ const ES = {
 
 const STATUS = [
     {
-        title: 'Trusted',
+        title: 'trusted',
         color: '#37beb0'
     },
     {
-        title: 'Warning',
+        title: 'warning',
         color: '#f9d342'
     },
     {
-        title: 'Warning',
+        title: 'warning',
         color: '#e7625f'
     }
 ];

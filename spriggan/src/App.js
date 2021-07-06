@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ES, STATUS } from './constants';
+import { Trans } from 'react-i18next';
 import './app.css';
 
 function App() {
@@ -67,16 +68,21 @@ function App() {
     };
 
     return (
-        <div className="App">
+        <div className="app">
             <header className="header">
-                <h1 className="title" style={styles.title}>
-                    {STATUS[severity].title}
-                </h1>
+                <Trans>
+                    <h1 className="title" style={styles.title}>
+                        {STATUS[severity].title}
+                    </h1>
+                </Trans>
             </header>
             <body className="content">
                 {breachDate.length > 0 ? (
                     <div className="item">
-                        Breach date: <a className="breachDate">{breachDate}</a>
+                        <Trans>
+                            <a>breachDate</a>
+                        </Trans>
+                        : <a className="breachDate">{breachDate}</a>
                     </div>
                 ) : null}
                 <div className="breachDesc">{desc}</div>
